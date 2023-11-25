@@ -1,10 +1,14 @@
 const asyncHandler = require('express-async-handler');
 
+const List = require('../models/listModel');
+
 // @Desc Gets the lists stored
 // @Route GET /api/lists
 // @Access Private
 const getLists = asyncHandler(async (req, res) => {
-    res.status(200).json({ message: 'Get lists' });
+    const lists = await List.find();
+
+    res.status(200).json(lists);
 });
 
 // @Desc Set a list
@@ -16,14 +20,30 @@ const setList = asyncHandler(async (req, res) => {
         throw new Error('Please add text field');
     }
 
-    res.status(200).json({ message: 'Set list' });
+    const list = await List.create({
+        text: req.body.text
+    });
+
+    res.status(200).json(list);
 });
 
 // @Desc Update a list
 // @Route PUT /api/lists/:id
 // @Access Private
 const updateList = asyncHandler(async (req, res) => {
-    res.status(200).json({ message: `Update list ${req.params.id}` });
+    const list = await List.findById(req.params.id);
+
+    if (!list) {
+        res.status(400);
+        throw new Error('List not found');
+    }
+
+    const updatedList = await List.findByIdAndUpdate(req.params.id, req.body,
+        {
+            new: true,
+        });
+
+    res.status(200).json(updatedList);
 });
 
 // @Desc Delete a list
