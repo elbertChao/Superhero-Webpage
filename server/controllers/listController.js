@@ -50,7 +50,16 @@ const updateList = asyncHandler(async (req, res) => {
 // @Route DELETE /api/lists/:id
 // @Access Private
 const deleteList = asyncHandler(async (req, res) => {
-    res.status(200).json({ message: `Delete list ${req.params.id}` });
+    const list = await List.findById(req.params.id);
+
+    if (!list) {
+        res.status(400);
+        throw new Error('List not found');
+    }
+
+    await list.deleteOne()
+
+    res.status(200).json({ id: req.params.id });
 });
 
 module.exports = {
