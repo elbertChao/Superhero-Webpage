@@ -15,6 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/api/lists', require('./routes/listRoutes'));
+app.use('/api/users', require('./routes/userRoutes'));
 
 // Using errorHandler middleware to overwrite default error handler
 app.use(errorHandler);
