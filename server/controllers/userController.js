@@ -72,13 +72,20 @@ const loginUser = asyncHandler(async (req, res) => {
 
 // @Desc Get user data
 // @Route GET /api/users/me
-// @Access Public
+// @Access Private
 const getMe = asyncHandler(async (req, res) => {
-    res.json({ message: 'User Data' });
+    const { _id, nickname, email } = await User.findById(req.user.id);
+
+    res.status(200).json({
+        id: _id,
+        nickname,
+        email,
+    });
 });
 
 // Generate JWT
 const generateToken = (id) => {
+    // Set the ID to 'id'
     return jwt.sign({ id }, process.env.JWT_SECRET, {
         expiresIn: '30d',
     });
