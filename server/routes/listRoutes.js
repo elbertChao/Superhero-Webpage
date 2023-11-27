@@ -1,13 +1,20 @@
 const express = require('express');
 const router = express.Router();
 // Getting the methods from listController.js
-const {getLists, setList, updateList, deleteList} = require('../controllers/listController');
+const {
+    getLists,
+    setList,
+    updateList,
+    deleteList,
+} = require('../controllers/listController');
+
+const { protect } = require('../middleware/authMiddleware');
 
 const {body, param, query} = require('express-validator');
 
 // Combine common routes, to clean code
-router.route('/').get(getLists).post(setList);
-router.route('/:id').delete(deleteList).put(updateList);
+router.route('/').get(protect, getLists).post(protect, setList);
+router.route('/:id').delete(protect, deleteList).put(protect, updateList);
 
 // // Define a new route for creating new lists
 // router.post('/api/lists/create', [body('name').isString().isLength({ min: 1, max: 20 }).trim(),], (req, res) => {
