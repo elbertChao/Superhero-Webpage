@@ -1,15 +1,13 @@
 import { useState, useEffect } from 'react';
-import { FaUser } from 'react-icons/fa';
+import { FaSignInAlt } from 'react-icons/fa';
 
 function Login() {
     const [formData, setFormData] = useState({
-        nickname: '',
         email: '',
         password: '',
-        password2: ''
     });
 
-    const { nickname, email, password, password2 } = formData;
+    const { email, password } = formData;
   
     const onChange = (e) => {
         setFormData((prevState) => ({
@@ -26,24 +24,13 @@ function Login() {
     return <>
         <section className='heading'>
             <h1>
-                <FaUser /> Register
+                <FaSignInAlt /> Login
             </h1>
-            <p>Create an account</p>
+            <p>Login to Create Private Superhero Lists</p>
         </section>
 
         <section className='form'>
             <form onSubmit={ onSubmit }>
-            <div className="form-group">
-                    <input 
-                        type="text"
-                        className="form-control"
-                        id="nickname"
-                        name='nickname'
-                        value={ nickname }
-                        placeholder='Enter your nickname'
-                        onChange={ onChange }
-                    />
-                </div>
                 <div className="form-group">
                     <input 
                         type="email"
@@ -63,17 +50,6 @@ function Login() {
                         name='password'
                         value={ password }
                         placeholder='Enter your password'
-                        onChange={ onChange }
-                    />
-                </div>
-                <div className="form-group">
-                    <input 
-                        type="password"
-                        className="form-control"
-                        id="password2"
-                        name='password2'
-                        value={ password2 }
-                        placeholder='Confirm password'
                         onChange={ onChange }
                     />
                 </div>
