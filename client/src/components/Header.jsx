@@ -10,8 +10,8 @@ function Header() {
     const { user } = useSelector((state) => state.auth)
 
     const onLogout = () => {
-        dispatch(logout()); // D
-        dispatch(reset());
+        dispatch(logout()); // perform logout/reset funciton from authSlice
+        dispatch(reset()); // Reset the state to non-auth
         navigate('/'); // Navigate back to dashboard
     }
 
@@ -21,7 +21,6 @@ function Header() {
                 <Link to='/'>Superheroes</Link>
             </div>
             <ul>
-                {/* If the user is logged in show logout */}
                 { user ? (
                     <li>
                         <button className='btn' onClick={ onLogout }>

@@ -40,18 +40,15 @@ const updateList = asyncHandler(async (req, res) => {
         throw new Error('List not found');
     }
 
-    // user will just be the ID of the user
-    const user = await User.findById(req.user.id);
-
     // Checks for user, if an ID was found
-    if (!user) {
+    if (!req.user) {
         res.status(401);
         throw new Error('User not found!');
     }
 
     // if the list's user id is not equal to the user that is trying to view the list
     // Make sure logged in user matches the same as the one that created the list
-    if (list.user.toString() !== user.id) {
+    if (list.user.toString() !== req.user.id) {
         res.status(401);
         throw new Error('User not authorized');
     }
@@ -75,18 +72,15 @@ const deleteList = asyncHandler(async (req, res) => {
         throw new Error('List not found');
     }
 
-    // user will just be the ID of the user
-    const user = await User.findById(req.user.id);
-
     // Checks for user, if an ID was found
-    if (!user) {
+    if (!req.user) {
         res.status(401);
         throw new Error('User not found!');
     }
 
     // if the list's user id is not equal to the user that is trying to view the list
     // Make sure logged in user matches the same as the one that created the list
-    if (list.user.toString() !== user.id) {
+    if (list.user.toString() !== req.user.id) {
         res.status(401);
         throw new Error('User no authorized');
     }
