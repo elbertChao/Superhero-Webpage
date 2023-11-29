@@ -12,13 +12,13 @@ function Header() {
     const onLogout = () => {
         dispatch(logout()); // perform logout/reset funciton from authSlice
         dispatch(reset()); // Reset the state to non-auth
-        navigate('/'); // Navigate back to dashboard
+        navigate('/home'); // Navigate back to home
     }
 
     return (
         <header className='header'>
             <div className='logo'>
-                <Link to='/'>Superheroes</Link>
+                <Link to='/home'>Superheroes</Link>
             </div>
             <ul>
                 { user ? (
