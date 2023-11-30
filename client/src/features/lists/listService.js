@@ -29,8 +29,23 @@ const getLists = async (token) => {
     return response.data;
 }
 
+// Deleting user list
+const deleteList = async (listId, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${ token }`
+        }
+    }
+
+    const response = await axios.delete(API_URL + listId, config);
+
+    return response.data;
+}
+
 const listService = {
     createList,
+    getLists,
+    deleteList,
 }
 
 export default listService;
