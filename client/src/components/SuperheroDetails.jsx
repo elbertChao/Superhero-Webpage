@@ -26,18 +26,31 @@ const SuperheroDetails = ({ superheroID }) => {
     setShowDetails(!showDetails);
   };
 
+  // Function to generate DuckDuckGo search link for DDG LINK
+  const generateSearchLink = (searchQuery) => {
+    return `https://duckduckgo.com/?q=${encodeURIComponent(searchQuery)}`;
+  };
+
   return (
     <div>
       <h3>{`ID: ${superheroID}`}</h3>
       <p>{`Name: ${superheroInfo.name}`}</p>
       {showDetails && (
         <div>
-          <p>{`Race: ${superheroInfo.race || 'Unknown'}`}</p>
-          <p>{`Publisher: ${superheroInfo.publisher || 'Unknown'}`}</p>
+          <p>{`Race: ${superheroInfo.Race || 'Not found'}`}</p>
+          <p>{`Publisher: ${superheroInfo.Publisher || 'Not found'}`}</p>
           {superheroPowers.length > 0 && (
             <p>{`Powers: ${superheroPowers.join(', ')}`}</p>
           )}
-          {/* Add other superhero details as needed */}
+          <h4>
+            <a
+              href={generateSearchLink(superheroInfo.name)}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Click here for DDG Search
+            </a>
+          </h4>
         </div>
       )}
       <button onClick={toggleDetails}>

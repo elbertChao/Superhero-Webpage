@@ -33,15 +33,21 @@ const SearchForm = () => {
 
       <div className="form-group">
         <label htmlFor="pattern">Search Pattern</label>
-        <input
-          type="text"
+        <select
           name="pattern"
           id="pattern"
           value={pattern}
           onChange={(e) => setPattern(e.target.value)}
-        />
+        >
+          <option value="">Select a pattern</option>
+          <option value="name">Name</option>
+          <option value="Race">Race</option>
+          <option value="Publisher">Publisher</option>
+          <option value="Powers">Powers</option>
+          {/* Add more options as needed */}
+        </select>
       </div>
-
+      
       <div className="form-group">
         <label htmlFor="n">Number of Results (optional)</label>
         <input

@@ -21,7 +21,7 @@ function Header() {
                 <Link to='/home'>Superheroes</Link>
             </div>
             <div className='logo'>
-                <Link to='/home'>Lists</Link>
+                <Link to='/'>Lists</Link>
             </div>
             <div className='logo'>
                 <Link to='/sppolicy'>Security & Privacy Policy</Link>
