@@ -32,7 +32,8 @@ const SuperheroDetails = ({ superheroID }) => {
       <p>{`Name: ${superheroInfo.name}`}</p>
       {showDetails && (
         <div>
-          {/* Display additional details when showDetails is true */}
+          <p>{`Race: ${superheroInfo.race || 'Unknown'}`}</p>
+          <p>{`Publisher: ${superheroInfo.publisher || 'Unknown'}`}</p>
           {superheroPowers.length > 0 && (
             <p>{`Powers: ${superheroPowers.join(', ')}`}</p>
           )}
