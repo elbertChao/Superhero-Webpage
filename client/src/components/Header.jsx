@@ -20,6 +20,18 @@ function Header() {
             <div className='logo'>
                 <Link to='/home'>Superheroes</Link>
             </div>
+            <div className='logo'>
+                <Link to='/home'>Lists</Link>
+            </div>
+            <div className='logo'>
+                <Link to='/sppolicy'>Security & Privacy Policy</Link>
+            </div>
+            <div className='logo'>
+                <Link to='/aup'>AUP</Link>
+            </div>
+            <div className='logo'>
+                <Link to='/dmca'>DMCA Notice & Takedown Policy</Link>
+            </div>
             <ul>
                 { user ? (
                     <li>

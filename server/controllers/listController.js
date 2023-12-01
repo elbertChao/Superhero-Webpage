@@ -14,17 +14,27 @@ const getLists = asyncHandler(async (req, res) => {
 
 // @Desc Set a list
 // @Route POST /api/lists
-// @Access Private
+// @Access Private if logged in, Public if not logged in
 const setList = asyncHandler(async (req, res) => {
     if (!req.body.text) {
         res.status(400);
         throw new Error('Please add text field');
     }
 
-    const list = await List.create({
-        text: req.body.text,
-        user: req.user.id,
-    });
+    let list;
+
+    // Check if the user is logged in
+    if (req.user) {
+        list = await List.create({
+            text: req.body.text,
+            user: req.user.id,
+        });
+    } else {
+        // If no user is logged in, create a public list
+        list = await List.create({
+            text: req.body.text,
+        });
+    }
 
     res.status(200).json(list);
 });

@@ -14,6 +14,14 @@ const userSchema = mongoose.Schema({
         type: String,
         required: [true, 'Please enter a password']
     },
+    // ADMIN ACCOUNT CREATION STARTS
+    isAdmin: {
+        type: Boolean, default:false
+    },
+    disabled: {
+        type: Boolean,
+        default: false
+    }
 },
 {
     timestamps: true

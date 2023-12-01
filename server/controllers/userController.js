@@ -78,10 +78,11 @@ const getMe = asyncHandler(async (req, res) => {
 });
 
 // Generate JWT
-const generateToken = (id) => {
+const generateToken = (id, user) => {
     // Set the ID to 'id'
     return jwt.sign({ id }, process.env.JWT_SECRET, {
         expiresIn: '30d',
+        isAdmin: user.isAdmin,
     });
 };
 
