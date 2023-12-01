@@ -1,7 +1,6 @@
 const asyncHandler = require('express-async-handler');
 
 const List = require('../models/listModel');
-const User = require('../models/userModel');
 
 // @Desc Gets a specific user's lists
 // @Route GET /api/lists

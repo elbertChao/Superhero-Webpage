@@ -10,7 +10,13 @@ const registerUser = asyncHandler(async (req, res) => {
     const { nickname, email, password } = req.body;
 
     // Make sure user fills out all fields for registration
-    if (!nickname || !email || !password) {
+    if (!email) {
+        res.status(400);
+        throw new Error('Please enter an email!');
+    } else if (!password) {
+        res.status(400);
+        throw new Error('Please enter a password!');
+    } else if (!nickname || !email || !password){
         res.status(400);
         throw new Error('Please fill all fields!');
     }
@@ -78,11 +84,12 @@ const getMe = asyncHandler(async (req, res) => {
 });
 
 // Generate JWT
-const generateToken = (id, user) => {
+// , user for later for admin *********************************************
+const generateToken = (id) => {
     // Set the ID to 'id'
     return jwt.sign({ id }, process.env.JWT_SECRET, {
         expiresIn: '30d',
-        isAdmin: user.isAdmin,
+        // isAdmin: user.isAdmin,
     });
 };
 

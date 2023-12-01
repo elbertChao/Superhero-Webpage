@@ -105,8 +105,6 @@ app.get('/api/superhero/:id', [param('id').isInt().toInt(),], (req, res) => { //
     const field = req.query.field; // Get the field parameter from the query string (USER INPUT)
     const pattern = req.query.pattern; // Get the pattern parameter from the query string (Will be Name, Race, Publisher, or Power)
     const n = parseInt(req.query.n); // Get the n parameter from the query string
-    console.log(field)
-    console.log(pattern)
     // Check if the field and pattern parameters are provided
     if (!field || !pattern) {
       return res.status(400).json({message: 'Field and pattern parameters are required.'});

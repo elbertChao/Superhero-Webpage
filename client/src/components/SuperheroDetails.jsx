@@ -4,6 +4,7 @@ import searchService from '../features/search/searchService';
 const SuperheroDetails = ({ superheroID }) => {
   const [superheroInfo, setSuperheroInfo] = useState({});
   const [superheroPowers, setSuperheroPowers] = useState([]);
+  const [showDetails, setShowDetails] = useState(false);
 
   useEffect(() => {
     const fetchSuperheroInfo = async () => {
@@ -21,15 +22,26 @@ const SuperheroDetails = ({ superheroID }) => {
     fetchSuperheroInfo();
   }, [superheroID]);
 
+  const toggleDetails = () => {
+    setShowDetails(!showDetails);
+  };
+
   return (
     <div>
       <h3>{`ID: ${superheroID}`}</h3>
       <p>{`Name: ${superheroInfo.name}`}</p>
-      {/* Add other superhero properties as needed */}
-      {superheroPowers.length > 0 && (
-        <p>{`Powers: ${superheroPowers.join(', ')}`}</p>
+      {showDetails && (
+        <div>
+          {/* Display additional details when showDetails is true */}
+          {superheroPowers.length > 0 && (
+            <p>{`Powers: ${superheroPowers.join(', ')}`}</p>
+          )}
+          {/* Add other superhero details as needed */}
+        </div>
       )}
-      {/* Add other superhero details as needed */}
+      <button onClick={toggleDetails}>
+        {showDetails ? 'Hide Details' : 'Show Details'}
+      </button>
     </div>
   );
 };

@@ -15,7 +15,6 @@ const protect = asyncHandler (async (req, res, next) => {
             // token is like: 'Bearer token'
             // so then it just RETURNS THE TOKEN, not the 'Bearer' part
             token = req.headers.authorization.split(' ')[1];
-
             // Verify the token
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
