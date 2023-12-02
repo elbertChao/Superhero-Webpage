@@ -6,10 +6,22 @@ const listSchema = mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    text: {
+    name: {
         type: String,
-        required: [true, 'Please add text value!']
+        required: [true, 'Please add a list name!'],
+        unique: true
     },
+    visibility: {
+        type: String,
+        enum: ['public', 'private'],
+        default: 'private'
+    },
+    heroes: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Superhero'
+        }
+      ]
 }, {
     timestamps: true,
 });

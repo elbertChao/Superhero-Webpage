@@ -1,5 +1,4 @@
 const asyncHandler = require('express-async-handler');
-
 const List = require('../models/listModel');
 
 // @Desc Gets a specific user's lists
@@ -15,23 +14,27 @@ const getLists = asyncHandler(async (req, res) => {
 // @Route POST /api/lists
 // @Access Private if logged in, Public if not logged in
 const setList = asyncHandler(async (req, res) => {
-    if (!req.body.text) {
+    if (!req.body.name || !req.body.heroes) {
         res.status(400);
-        throw new Error('Please add text field');
-    }
+        throw new Error('Please enter a name and hero ID\'s for the list');
+      }
 
     let list;
 
     // Check if the user is logged in
     if (req.user) {
         list = await List.create({
-            text: req.body.text,
+            name: req.body.name,
+            visibility: req.body.visibility || 'private',
             user: req.user.id,
+            heroes: req.body.heroes
         });
     } else {
         // If no user is logged in, create a public list
         list = await List.create({
-            text: req.body.text,
+            name: req.body.name,
+            visibility: req.body.visibility || 'private',
+            heroes: req.body.heroes
         });
     }
 

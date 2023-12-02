@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import listService from './listService';
+import { getHeroes } from '../heroes/heroSlice';
 
 const initialState = {
     lists: [],
