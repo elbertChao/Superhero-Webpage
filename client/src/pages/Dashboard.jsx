@@ -5,7 +5,7 @@ import ListForm from '../components/ListForm';
 import ListItem from '../components/ListItem';
 import Spinner from '../components/Spinner';
 import SuperheroDetails from '../components/SuperheroDetails';
-import { getLists, reset } from '../features/lists/listSlice';
+import { getLists, reset, deleteList } from '../features/lists/listSlice';
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -31,6 +31,10 @@ function Dashboard() {
     }
   }, [user, navigate, isError, message, dispatch]);
 
+  const handleDeleteList = (listId) => {
+    // Dispatch the deleteList action with the listId
+    dispatch(deleteList(listId));
+  };
 
   if (isLoading) {
     return <Spinner />
@@ -57,6 +61,9 @@ function Dashboard() {
                     <SuperheroDetails key={superheroID} superheroID={superheroID} />
                   ))}
                 </div>
+                <button onClick={() => handleDeleteList(list._id)}>
+                  Delete List
+                </button>
               </div>
             ))}
           </div>
