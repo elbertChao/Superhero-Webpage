@@ -1,29 +1,24 @@
 const mongoose = require('mongoose');
 
 const listSchema = mongoose.Schema(
-{
+  {
     user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'User',
     },
-    name: {
-        type: String,
-        required: [true, 'Please add a list name!'],
-        unique: true
+    title: {
+      type: String,
+      required: [true, 'Please add a title'],
     },
-    visibility: {
-        type: String,
-        enum: ['public', 'private'],
-        default: 'private'
+    superheroIds: {
+      type: [String], // Assuming superheroIds are strings, adjust if they are a different type
+      required: [true, 'Please add superhero IDs'],
     },
-    heroes: [
-        {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'Superhero'
-        }
-      ]
-}, {
+  },
+  {
     timestamps: true,
-});
+  }
+);
 
 module.exports = mongoose.model('List', listSchema);

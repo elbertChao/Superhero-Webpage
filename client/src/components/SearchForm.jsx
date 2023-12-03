@@ -44,7 +44,6 @@ const SearchForm = () => {
           <option value="Race">Race</option>
           <option value="Publisher">Publisher</option>
           <option value="Powers">Powers</option>
-          {/* Add more options as needed */}
         </select>
       </div>
       

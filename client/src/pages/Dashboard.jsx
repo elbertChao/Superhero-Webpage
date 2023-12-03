@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import ListForm from '../components/ListForm';
 import ListItem from '../components/ListItem';
 import Spinner from '../components/Spinner';
+import SuperheroDetails from '../components/SuperheroDetails';
 import { getLists, reset } from '../features/lists/listSlice';
 
 function Dashboard() {
@@ -35,24 +36,36 @@ function Dashboard() {
     return <Spinner />
   }
 
-  return <>
-    <section className="heading">
-      <h1>Welcome { user && user.nickname}</h1>
-      <p>Private Lists Dashboard</p>
-    </section>
+  return (
+    <>
+      <section className="heading">
+        <h1>Welcome {user && user.nickname}</h1>
+        <p>Lists Dashboard</p>
+      </section>
 
-    <ListForm />
+      <ListForm />
 
-    <section className="content">
-      { lists.length > 0 ? (
-        <div className="lists">
-          { lists.map((list) => (
-            <ListItem key={ list._id } list={ list }/>
-          ))}
-        </div>
-      ) : (<h3>You do not have any lists created </h3>) }
-    </section>
-  </>
+      <section className="content">
+        {lists.length > 0 ? (
+          <div className="lists">
+            {lists.map((list) => (
+              <div key={list._id} className="list-item">
+                <h2>{list.title}</h2>
+                <p>Superhero IDs: {list.superheroIds.join(', ')}</p>
+                <div>
+                  {list.superheroIds.map((superheroID) => (
+                    <SuperheroDetails key={superheroID} superheroID={superheroID} />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <h3>You do not have any lists created </h3>
+        )}
+      </section>
+    </>
+  );
 }
 
 export default Dashboard

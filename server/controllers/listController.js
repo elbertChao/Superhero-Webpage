@@ -14,27 +14,25 @@ const getLists = asyncHandler(async (req, res) => {
 // @Route POST /api/lists
 // @Access Private if logged in, Public if not logged in
 const setList = asyncHandler(async (req, res) => {
-    if (!req.body.name || !req.body.heroes) {
+    if (!req.body.title || !req.body.superheroIds) {
         res.status(400);
-        throw new Error('Please enter a name and hero ID\'s for the list');
-      }
+        throw new Error('Please provide both title and superheroIds');
+    }
 
     let list;
 
     // Check if the user is logged in
     if (req.user) {
         list = await List.create({
-            name: req.body.name,
-            visibility: req.body.visibility || 'private',
+            title: req.body.title,
+            superheroIds: req.body.superheroIds,
             user: req.user.id,
-            heroes: req.body.heroes
         });
     } else {
         // If no user is logged in, create a public list
         list = await List.create({
-            name: req.body.name,
-            visibility: req.body.visibility || 'private',
-            heroes: req.body.heroes
+            title: req.body.title,
+            superheroIds: req.body.superheroIds,
         });
     }
 
@@ -65,10 +63,12 @@ const updateList = asyncHandler(async (req, res) => {
         throw new Error('User not authorized');
     }
 
-    const updatedList = await List.findByIdAndUpdate(req.params.id, req.body,
-        {
-            new: true,
-        });
+    const updatedList = await List.findByIdAndUpdate(req.params.id, {
+        title: req.body.title,
+        superheroIds: req.body.superheroIds,
+    }, {
+        new: true,
+    });
 
     res.status(200).json(updatedList);
 });
@@ -94,14 +94,14 @@ const deleteList = asyncHandler(async (req, res) => {
     // Make sure logged in user matches the same as the one that created the list
     if (list.user.toString() !== req.user.id) {
         res.status(401);
-        throw new Error('User no authorized');
+        throw new Error('User not authorized');
     }
 
-    await list.deleteOne()
+    await list.deleteOne();
 
     res.status(200).json({ id: req.params.id });
 });
 
 module.exports = {
     getLists, setList, updateList, deleteList,
-}
+};
