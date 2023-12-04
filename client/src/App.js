@@ -7,10 +7,12 @@ import Register from './pages/Register';
 import SPPolicy from './pages/SPPolicy';
 import AUP from './pages/AUP';
 import DMCAPolicy from './pages/DMCAPolicy';
+import SiteMaintenance from './pages/SiteMaintenance';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 
 function App() {
+  if (user)
   return (
     <>
       <Router>
@@ -24,6 +26,10 @@ function App() {
             <Route path='sppolicy' element={<SPPolicy />}/>
             <Route path='/aup' element={<AUP />}/>
             <Route path='/dmca' element={<DMCAPolicy />}/>
+
+            {isAdmin && {
+              <Route path='/siteMaintenance' element={<SiteMaintenance />} />
+            }}
           </Routes>
         </div>
       </Router>

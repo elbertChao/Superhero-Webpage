@@ -140,23 +140,31 @@ app.get('/api/superhero/:id', [param('id').isInt().toInt(),], (req, res) => { //
 
   // WITH SOFT SEARCHING ********************
   app.get('/api/match', [query('field').isString().trim(), query('pattern').isString().trim()], (req, res) => {
-    const field = req.query.field;
-    const pattern = req.query.pattern;
-    const n = parseInt(req.query.n);
-  
-    if (!field || !pattern) {
-      return res.status(400).json({ message: 'Field and pattern parameters are required.' });
-    }
-  
-    const matches = stringSimilarity.findBestMatch(field, superheroInfoData.map(hero => hero[pattern]));
-  
-    const matchedSuperheroes = matches.ratings
-      .filter(match => match.rating >= 0.1)
-      .slice(0, n || matches.ratings.length)
-      .map(match => superheroInfoData.findIndex(hero => hero[pattern] === match.target));
+  const field = req.query.field;
+  const pattern = req.query.pattern;
+  const n = parseInt(req.query.n);
 
-    return res.json({ matchedSuperheroes });
-  });
+  if (!field || !pattern) {
+    return res.status(400).json({ message: 'Field and pattern parameters are required.' });
+  }
+
+  const matches = stringSimilarity.findBestMatch(field, superheroInfoData.map(hero => hero[pattern]));
+
+  const uniqueIndexes = new Set(); // Use a Set to store unique indexes
+
+  const matchedSuperheroes = matches.ratings
+    .filter(match => match.rating >= 0.1)
+    .slice(0, n || matches.ratings.length)
+    .forEach(match => {
+      const index = superheroInfoData.findIndex(hero => hero[pattern] === match.target);
+      if (index !== -1) {
+        uniqueIndexes.add(index);
+      }
+    });
+
+  return res.json({ matchedSuperheroes: Array.from(uniqueIndexes) });
+});
+
   
   // ************************************************************ END ************************************************************ //
   
